@@ -44,35 +44,51 @@ public final class Pizza implements Aggregate {
     }
 
     public boolean isNew() {
-        return false;
+        return state == State.NEW;
     }
 
     void startPrep() {
+        if (state != State.NEW) {
+            throw new IllegalStateException();
+        }
+        state = State.PREPPING;
     }
 
     boolean isPrepping() {
-        return false;
+        return state == State.PREPPING;
     }
 
     void finishPrep() {
+        if (state != State.PREPPING) {
+            throw new IllegalStateException();
+        }
+        state = State.PREPPED;
     }
 
     boolean hasFinishedPrep() {
-        return false;
+        return state == State.PREPPED;
     }
 
     void startBake() {
+        if (state != State.PREPPED) {
+            throw new IllegalStateException();
+        }
+        state = State.BAKING;
     }
 
     boolean isBaking() {
-        return false;
+        return state == State.BAKING;
     }
 
     void finishBake() {
+        if (state != State.BAKING) {
+            throw new IllegalStateException();
+        }
+        state = State.BAKED;
     }
 
     boolean hasFinishedBaking() {
-        return false;
+        return state == State.BAKED;
     }
 
     @Override
